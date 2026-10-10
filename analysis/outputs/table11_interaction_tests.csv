@@ -1,0 +1,12 @@
+Stratifier,Predictor,LR χ²,df,p (interaction)
+Age group,Age (per 10 years),5.011623203667796,2,0.08160933681266568
+Age group,PS ≥ 2 (vs 0–1),6.267555378389716,2,0.04355295655693982
+Age group,WHO 2021 classification,0.8556602948203818,2,0.6519221360584828
+Age group,Hypofractionated RT (vs conventional),0.046857852578796155,2,0.9768434000867747
+Age group,Tumour volume (per doubling),0.052022185622490724,2,0.9743242815534565
+Age group,FLAIR texture risk score (per SD),3.814797294479604,2,0.14846609738526775
+Performance status,Age (per 10 years),2.7499273732798883,1,0.09725884613666727
+Performance status,WHO 2021 classification,0.38798379404988736,1,0.5333611135352156
+Performance status,Hypofractionated RT (vs conventional),3.433898493920424,1,0.06387116337896934
+Performance status,Tumour volume (per doubling),0.1524601989453913,1,0.6961953038838259
+Performance status,FLAIR texture risk score (per SD),0.5431471532342584,1,0.46113136276937017
