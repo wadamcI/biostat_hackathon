@@ -1,0 +1,104 @@
+---
+title: "Biostatistics Warm-Up Activity"
+output: html_document
+date: "2025-09-27"
+---
+
+## Wilms Tumor Dataset
+
+```{r,include=F}
+setwd("Path to folder on computer where you saved the dataset")
+```
+
+```{r}
+#Read in dataset and look at first few rows
+wilms=read.csv("wilms.csv")
+head(wilms)
+library(visdat)
+vis_miss(wilms)
+```
+
+## Descriptive Statistics
+
+```{r}
+library(ggplot2)
+wilms$ones=rep(1,dim(wilms)[1])
+g=ggplot(wilms)+geom_bar(stat="identity",aes(x=as.factor(stage),y=ones,fill=as.factor(rel)),position = "fill")
+g=g+theme_classic()
+g=g+scale_fill_manual(values = c("navy","dodgerblue"),labels=c("No","Yes"))
+g=g+xlab("Tumor Stage")+ylab("Proportion")
+g=g+theme(text=element_text(size=20),legend.position="top")
+g=g+guides(fill=guide_legend(title="Relapse"))
+g
+```
+
+```{r}
+g=ggplot(wilms)+geom_bar(stat="identity",aes(x=histol,y=ones,fill=as.factor(rel)),position = "fill")
+g=g+theme_classic()
+g=g+scale_fill_manual(values = c("navy","dodgerblue"),labels=c("No","Yes"))
+g=g+xlab("Histology")+ylab("Proportion")
+g=g+scale_x_continuous(breaks=c(1,2),labels=c("Favorable","Unfavorable"))
+g=g+theme(text=element_text(size=20),legend.position="top")
+g=g+guides(fill=guide_legend(title="Relapse"))
+g
+```
+
+```{r}
+wilms$age_dec=cut(wilms$age,10,labels=1:10)
+g=ggplot(wilms)+geom_bar(stat="identity",aes(x=age_dec,y=ones,fill=as.factor(rel)),position = "fill")
+g=g+theme_classic()
+g=g+scale_fill_manual(values = c("navy","dodgerblue"),labels=c("No","Yes"))
+g=g+xlab("Age Decile")+ylab("Proportion")
+g=g+theme(text=element_text(size=20),legend.position="top")
+g=g+guides(fill=guide_legend(title="Relapse"))
+g
+```
+
+
+## Statistical Modeling and Inference
+
+$$\textrm{Log-Odds of Relapse}=\beta_0+\beta_1\textrm{Age}+\beta_2\textrm{Tumor Stage}+\beta_3\textrm{Unfavorable Histology}$$
+```{r}
+#Logistic Regression Model
+regression=glm(rel~age+stage+histol,data=wilms,family="binomial")
+summary(regression)
+```
+
+## Prediction
+
+```{r}
+#Predicted Relapse Probability for Specific Patients
+newdata=data.frame(age=c(10,15,20),stage=c(1,3,4),histol=c(1,0,1))
+newdata$phat=predict(regression,newdata=newdata,type="response")
+names(newdata)=c("age","stage","histol","predicted relapse probability")
+newdata
+```
+
+
+```{r, message=F}
+#ROC Curve for Prediction Model
+library(WVPlots)
+wilms$phat=predict(regression,newdata=wilms,type="response")
+ROCPlot(wilms, xvar="phat", truthVar = "rel", truthTarget=1, title="ROC Curve for Relapse")
+```
+
+```{r, message=F}
+#Calibration Plot
+library(CalibrationCurves)
+val.prob.ci.2(wilms$phat,wilms$rel,dostats=F)
+```
+
+### Data Source
+
+Therneau T (2024). _A Package for Survival Analysis in R_. R package
+version 3.6-4, <https://CRAN.R-project.org/package=survival>.
+
+Terry M. Therneau, Patricia M. Grambsch (2000). _Modeling Survival
+Data: Extending the Cox Model_. Springer, New York. ISBN
+0-387-98784-3.
+
+
+
+
+
+
