@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <title>
+   GBM Research — Patient input 
+  </title>
+  <link href="style.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <header>
+   <a class="brand" href="./">
+    <span aria-hidden="true" class="mark">
+     ✳
+    </span>
+    <span>
+     GBM
+     <small>
+      / Research workspace
+     </small>
+    </span>
+   </a>
+  </header>
+  <main>
+   <section class="intro">
+    <p class="eyebrow">
+     GLIOBLASTOMA RESEARCH
+    </p>
+   </section>
+   <div class="grid">
+    <section class="card">
+     <div class="heading">
+      <h2>
+       Patient characteristics
+      </h2>
+      <span class="step">
+       01 / INPUT
+      </span>
+     </div>
+     <p class="muted">
+      Enter information recorded at the baseline assessment.
+     </p>
+     <form id="patient-form">
+      <div class="fields">
+       <label for="age">
+        Age
+        <input autocomplete="off" id="age" max="110" min="18" placeholder="e.g. 65" required="" step="1" type="number"/>
+        <span class="helper">
+         Years at baseline assessment
+        </span>
+       </label>
+       <label for="gender">
+        Gender category
+        <select id="gender" required="">
+         <option value="">
+          Select category
+         </option>
+         <option value="Female">
+          Female
+         </option>
+         <option value="Male">
+          Male
+         </option>
+        </select>
+        <span class="helper">
+         Categories in the source dataset
+        </span>
+       </label>
+       <label for="height">
+        Height
+        <input autocomplete="off" id="height" max="250" min="100" placeholder="e.g. 165" required="" step="0.1" type="number"/>
+        <span class="helper">
+         Centimetres (cm)
+        </span>
+       </label>
+       <label for="weight">
+        Weight
+        <input autocomplete="off" id="weight" max="300" min="20" placeholder="e.g. 70" required="" step="0.1" type="number"/>
+        <span class="helper">
+         Kilograms (kg)
+        </span>
+       </label>
+      </div>
+      <label for="performance">
+       WHO performance status
+       <select id="performance" required="">
+        <option value="">
+         Select performance status
+        </option>
+        <option value="0">
+         0 — Asymptomatic
+        </option>
+        <option value="1">
+         1 — Symptomatic, completely ambulatory
+        </option>
+        <option value="2">
+         2 — In bed less than 50% of the day
+        </option>
+        <option value="3">
+         3 — In bed more than 50%, not bedbound
+        </option>
+        <option value="4">
+         4 — Bedbound
+        </option>
+       </select>
+      </label>
+      <p class="error" id="error" role="alert">
+      </p>
+      <button class="primary" type="submit">
+       <span>
+        Review inputs
+       </span>
+       <span aria-hidden="true">
+        →
+       </span>
+      </button>
+      <div class="actions">
+       <button class="secondary" id="example" type="button">
+        Load example
+       </button>
+       <button class="secondary" type="reset">
+        Clear form
+       </button>
+      </div>
+      <p class="small">
+       Use fictional data for this demonstration. Nothing is sent or saved.
+      </p>
+     </form>
+    </section>
+    <section aria-labelledby="result-heading" class="card result">
+     <div class="heading">
+      <h2 id="result-heading">
+       Patient overview
+      </h2>
+      <span class="step">
+       02 / REVIEW
+      </span>
+     </div>
+     <div class="status">
+      <span aria-hidden="true" class="dot">
+      </span>
+      <span id="status">
+       Awaiting patient inputs
+      </span>
+     </div>
+     <div class="empty" id="empty">
+      <div aria-hidden="true" class="icon">
+       <svg fill="none" height="30" viewbox="0 0 30 30" width="30">
+        <rect height="22" rx="3" stroke="currentColor" stroke-width="1.5" width="17" x="7" y="5">
+        </rect>
+        <rect fill="#f0f6ed" height="5" rx="1.5" stroke="currentColor" stroke-width="1.5" width="9" x="11" y="3">
+        </rect>
+        <path d="M11 13h9M11 18h9M11 23h5" stroke="currentColor" stroke-linecap="round" stroke-width="1.5">
+        </path>
+       </svg>
+      </div>
+      <h3>
+       Ready when you are.
+      </h3>
+      <p>
+       Complete the form to review the entered characteristics here.
+      </p>
+     </div>
+     <div aria-live="polite" class="summary" hidden="" id="review">
+      <h3>
+       Entered characteristics
+      </h3>
+      <div id="summary-rows">
+      </div>
+      <p class="success">
+       Inputs reviewed. No survival prediction has been generated.
+      </p>
+     </div>
+     <div class="placeholder">
+      <p class="title">
+       SURVIVAL ESTIMATE
+      </p>
+      <div class="big">
+       —
+       <span>
+        weeks
+       </span>
+      </div>
+      <div class="range">
+       <span>
+        Prediction interval
+       </span>
+       <b>
+        —
+       </b>
+      </div>
+      <p class="small">
+       Reserved for a future prediction model. These placeholders never change based on patient inputs.
+      </p>
+     </div>
+    </section>
+   </div>
+   <details>
+    <summary>
+     About this prototype
+    </summary>
+    <p>
+     This is a clinical-input-only website design with local form interactions. “Review inputs” checks required fields and displays the entered values. It does not calculate BMI, survival estimates, uncertainty, risk scores or treatment recommendations. Refreshing or clearing the form removes its in-memory state.
+    </p>
+   </details>
+   <footer>
+    <span class="footer-label">
+     <span aria-hidden="true" class="dot">
+     </span>
+     Browser-local form · No patient records stored
+    </span>
+    <span>
+     GBM Research / Design prototype
+    </span>
+   </footer>
+  </main>
+  <script>
+   'use strict';
+
+const el=id=>document.getElementById(id);
+
+function clearReview(){el('review').hidden=true;el('empty').hidden=false;el('summary-rows').replaceChildren();el('status').textContent='Awaiting patient inputs';el('error').textContent='';}
+
+
+
+el('patient-form').addEventListener('input',clearReview);
+
+el('patient-form').addEventListener('submit',event=>{event.preventDefault();if(!el('patient-form').reportValidity())return;const rows=[['Age',el('age').value+' years'],['Gender category',el('gender').value],['Height',el('height').value+' cm'],['Weight',el('weight').value+' kg'],['WHO performance status',el('performance').value]];el('summary-rows').replaceChildren();for(const[label,value]of rows){const row=document.createElement('div');row.className='row';const key=document.createElement('span');key.textContent=label;const val=document.createElement('strong');val.textContent=value;row.append(key,val);el('summary-rows').append(row);}el('empty').hidden=true;el('review').hidden=false;el('status').textContent='Inputs reviewed · Design demo';});
+
+el('example').addEventListener('click',()=>{clearReview();for(const[id,value]of Object.entries({age:'65',gender:'Female',height:'165',weight:'70',performance:'1'}))el(id).value=value;el('age').focus();});
+
+el('patient-form').addEventListener('reset',()=>{setTimeout(clearReview,0);});
+  </script>
+ </body>
+</html>
+
